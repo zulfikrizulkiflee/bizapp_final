@@ -1,0 +1,7 @@
+.truncate {
+    line-height: 20px;
+    max-height: 20px;
+    max-width: 90%;
+    overflow: hidden;
+    display: inline-block;
+}
