@@ -1,7 +1,25 @@
-.truncate {
-    line-height: 20px;
-    max-height: 20px;
-    max-width: 90%;
-    overflow: hidden;
-    display: inline-block;
-}
+        .truncate {
+            line-height: 20px;
+            max-height: 20px;
+            max-width: 90%;
+            overflow: hidden;
+            display: inline-block;
+        }
+        /*
+        .breadcrumbs .breadcrumb li a {
+            background: #FE980F;
+            color: #FFFFFF;
+            padding: 20px 50px;
+        }
+        
+        .breadcrumbs .breadcrumb li a:after {
+            content: "";
+            height: 56px;
+            width: auto;
+            border-width: 28px;
+            border-style: solid;
+            border-color: transparent transparent transparent #FE980F;
+            position: absolute;
+            top: -10px;
+            left: 170px;
+        }*/

@@ -8,7 +8,7 @@ $(window).load(function () {
 });
 $(window).ready(function () {
     //breadcrumb cart
-    $('#cart_items .breadcrumb li:first-child a').html('&nbsp;Cart&nbsp;&nbsp;').attr('href', 'cart.html?page=cart');
+    $('#cart_items .breadcrumb li:first-child a').html('&nbsp;Summary&nbsp;&nbsp;').attr('href', 'cart.html?page=cart');
 
     $('.table').css('margin-bottom', '0');
     //category tab
