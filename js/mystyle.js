@@ -7,8 +7,15 @@ $(window).load(function () {
     }
 });
 $(window).ready(function () {
+    $('.shop-menu nav')
+    $('.chose_area').css('visibility', 'hidden');
+    $('.check_out').text('Proceed to Check Out');
     //breadcrumb cart
-    $('#cart_items .breadcrumb li:first-child a').html('&nbsp;Summary&nbsp;&nbsp;').attr('href', 'cart.html?page=cart');
+    $('#cart_items .breadcrumbs .breadcrumb').remove();
+    //    $('#cart_items .breadcrumbs').html('<table style="width:100%;border:1px solid black;margin-bottom:10px;background-color:#F0F0E9;font-size:1.2vw;"><tr><td class="summary" style="width:15%;padding:1em 2em">Summary</td><td class="arrowhead" style="width:5%"></td><td class="signin" style="width:15%;padding:1em 2em">Sign In</td><td class="arrowhead" style="width:5%"></td><td class="address" style="width:15%;padding:1em 2em">Address</td><td class="arrowhead" style="width:5%"></td><td class=""shipping" style="width:15%;padding:1em 2em">Shipping</td><td class="arrowhead" style="width:5%"></td><td class="payment" style="width:15%;padding:1em 2em">Payment</td><td class="arrowhead" style="width:5%"></td></tr></table>');
+    //    $('#cart_items .breadcrumbs').html('<ul id="breadcrumbs-two"> <li><a href="javascript:void(0);">Lorem ipsum</a></li> <li><a href="javascript:void(0);">Vivamus nisi eros</a></li> <li><a href="javascript:void(0);">Nulla sed lorem risus</a></li> <li><a href="javascript:void(0);">Nam iaculis commodo</a></li> <li><a href="javascript:void(0);">Current crumb</a></li> </ul>');
+    //    $('#cart_items .breadcrumbs').html('<div class="row" style="margin: 0px 0px 10px 0;">  <div id="bc1" class="btn-group btn-breadcrumb">  <div class="btn btn-default">Summary</div> <a href="#" class="btn btn-default"><div>Sign In</div></a> <a href="#" class="btn btn-default"><div>Address</div></a> <a href="#" class="btn btn-default"><div>Shipping</div></a> <a href="#" class="btn btn-default"><div>Payment</div></a> </div>');
+    $('#cart_items .breadcrumbs').html('<ol class="cd-multi-steps text-bottom count"> <li class=""><em>Summary</em></li> <li class=""><em>Sign In</em></li> <li class=""><em>Address</em></li> <li class=""><em>Shipping</em></li><li class=""><em>Payment</em></li> </ol>');
 
     $('.table').css('margin-bottom', '0');
     //category tab
@@ -66,7 +73,7 @@ $(window).ready(function () {
     var modal_str = '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"> <div class="modal-dialog" role="document"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> <h4 class="modal-title" id="myModalLabel" style="color:#2bc44c"><i class="fa fa-check"></i> Item successfully added to cart</h4> </div> <div class="modal-body"><div class="row"> <div class="col-sm-12"> <div class="col-sm-3 cart-img-modal" style="border: 1px solid #d6d4d4;height:250px;background:url()no-repeat center center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;"></div> <div class="col-sm-4 current-item-cart" style="border-right:1px solid black;min-height: 250px;padding-top:25px"> <div class="row"> <div class="col-sm-12"><b></b></div> <div class="col-sm-12"><b>Product ID</b></div> <div class="col-sm-12"><b>Price </b> RM</div> </div> </div> <div class="col-sm-5 cart-info-modal" style="background-color:#FAFAFA;min-height: 250px;padding-top:25px"> <div class="col-sm-12"><b>You have 1 item in your cart</b></div> <div class="col-sm-12"><b>Total price</b> RM</div> </div> </div> </div></div> <div class="modal-footer"> <button type="button" class="btn btn-primary" data-dismiss="modal">Continue Shopping</button> <button type="button" class="btn btn-primary open-cart">Proceed to Cart</button> </div> </div> </div> </div>';
     $('body').append(modal_str);
     $('.open-cart').on('click', function () {
-        window.open('cart.html?page=cart', '_self');
+        window.open('cart.html?page=cart&section=summary', '_self');
     });
     //end modal
     $('.price-range').css('display', 'none');
@@ -86,6 +93,7 @@ $(window).ready(function () {
     $('#header .navbar-toggle').attr('style', 'display:none');
     $('#header .shop-menu ul li:nth-child(2)').css('display', 'none');
     $('#header .shop-menu ul li:nth-child(3)').css('display', 'none');
+    $('#header .shop-menu ul li:nth-child(4) a').attr('href', 'cart.html?page=cart&section=summary');
     $('#header .shop-menu ul li:last-child').html('<a href="login.html"><i class="fa fa-lock"></i> Login/Signup</a>');
     //    header end
 
@@ -94,6 +102,23 @@ $(window).ready(function () {
         if ($(window).width() <= 480) {
             $('#header .shop-menu ul').attr('style', 'text-align:center;margin-right:25px;');
         }
+
+
+        ellipses1 = $("#bc1 :nth-child(2)")
+        if ($("#bc1 a:hidden").length > 0) {
+            ellipses1.show()
+        } else {
+            ellipses1.hide()
+        }
+
+        ellipses2 = $("#bc2 :nth-child(2)")
+        if ($("#bc2 a:hidden").length > 0) {
+            ellipses2.show()
+        } else {
+            ellipses2.hide()
+        }
+
+
 
     });
     //});@media end

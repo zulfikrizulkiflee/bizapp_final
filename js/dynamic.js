@@ -25,7 +25,7 @@ if (page == "home") {
             } else {
                 image = image;
             }
-            var dom_product = ('<div class="col-xs-6 col-sm-4"> <div class="product-image-wrapper"> <div class="single-products"> <div class="productinfo text-center"> <img src="' + image + '" alt="" style="height:190px" onError="this.onerror=null;this.src=\'' + img_filler + '\';"> <h2>RM' + dataProduct.price + '</h2> <p class="truncate">' + dataProduct.productname + '</p> <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a> </div> <div class="product-overlay"> <div class="overlay-content"> <a href="javascript:void(0)"><i class="views-icon fa fa-eye"></i></a><h2>RM' + dataProduct.price + '</h2> <p class="truncate" title="' + dataProduct.productname + '">' + dataProduct.productname + '</p> <a href="#" class="btn btn-default add-to-cart" data-id="' + dataProduct.id + '" data-pid="' + dataProduct.pid + '"><i class="fa fa-shopping-cart"></i>Add to cart</a> </div> </div> </div> <div class="choose"> <ul class="nav nav-pills nav-justified"> <li><a href="#"><i class="fa fa-picture-o"></i> View Item</a></li> <li><a href="#"><i class="fa fa-plus-square"></i> Wishlist</a></li> </ul> </div> </div> </div>');
+            var dom_product = ('<div class="col-xs-6 col-sm-4"> <div class="product-image-wrapper"> <div class="single-products"> <div class="productinfo text-center"> <img src="' + image + '" alt="" style="height:190px" title="' + dataProduct.attachment + '" onError="this.onerror=null;this.src=\'' + img_filler + '\';"> <h2>RM' + dataProduct.price + '</h2> <p class="truncate">' + dataProduct.productname + '</p> <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a> </div> <div class="product-overlay"> <div class="overlay-content"> <a href="javascript:void(0)"><i class="views-icon fa fa-eye"></i></a><h2>RM' + dataProduct.price + '</h2> <p class="truncate" title="' + dataProduct.productname + '">' + dataProduct.productname + '</p> <a href="#" class="btn btn-default add-to-cart" data-id="' + dataProduct.id + '" data-pid="' + dataProduct.pid + '"><i class="fa fa-shopping-cart"></i>Add to cart</a> </div> </div> </div> <div class="choose"> <ul class="nav nav-pills nav-justified"> <li><a href="#"><i class="fa fa-picture-o"></i> View Item</a></li> <li><a href="#"><i class="fa fa-plus-square"></i> Wishlist</a></li> </ul> </div> </div> </div>');
 
             $('.features_items').append(dom_product);
             //product container
@@ -130,10 +130,50 @@ if (page == "home") {
     });
     recommendedItems();
 } else if (page == "cart") {
+    var section = $.urlParam('section');
+    if (section == "summary") {
+        $('.breadcrumbs li:nth-child(1)').addClass('current');
+    } else if (section == "signin") {
+        $('.breadcrumbs li:nth-child(1)').removeClass('current').addClass('visited');
+        $('.breadcrumbs li:nth-child(1) em').replaceWith('<a href="cart.html?page=cart&section=summary">Summary</a>');
+        $('.breadcrumbs li:nth-child(2)').addClass('current');
+    } else if (section == "address") {
+        $('.breadcrumbs li:nth-child(1)').removeClass('current').addClass('visited');
+        $('.breadcrumbs li:nth-child(1) em').replaceWith('<a href="cart.html?page=cart&section=summary">Summary</a>');
+        $('.breadcrumbs li:nth-child(2)').removeClass('current').addClass('visited');
+        $('.breadcrumbs li:nth-child(2) em').replaceWith('<a href="cart.html?page=cart&section=signin">Sign In</a>');
+        $('.breadcrumbs li:nth-child(3)').addClass('current');
+    } else if (section == "shipping") {
+        $('.breadcrumbs li:nth-child(1)').removeClass('current').addClass('visited');
+        $('.breadcrumbs li:nth-child(1) em').replaceWith('<a href="cart.html?page=cart&section=summary">Summary</a>');
+        $('.breadcrumbs li:nth-child(2)').removeClass('current').addClass('visited');
+        $('.breadcrumbs li:nth-child(2) em').replaceWith('<a href="cart.html?page=cart&section=signin">Sign In</a>');
+        $('.breadcrumbs li:nth-child(3)').removeClass('current').addClass('visited');
+        $('.breadcrumbs li:nth-child(3) em').replaceWith('<a href="cart.html?page=cart&section=address">Address</a>');
+        $('.breadcrumbs li:nth-child(4)').addClass('current');
+    } else if (section == "payment") {
+        $('.breadcrumbs li:nth-child(1)').removeClass('current').addClass('visited');
+        $('.breadcrumbs li:nth-child(1) em').replaceWith('<a href="cart.html?page=cart&section=summary">Summary</a>');
+        $('.breadcrumbs li:nth-child(2)').removeClass('current').addClass('visited');
+        $('.breadcrumbs li:nth-child(2) em').replaceWith('<a href="cart.html?page=cart&section=signin">Sign In</a>');
+        $('.breadcrumbs li:nth-child(3)').removeClass('current').addClass('visited');
+        $('.breadcrumbs li:nth-child(3) em').replaceWith('<a href="cart.html?page=cart&section=address">Address</a>');
+        $('.breadcrumbs li:nth-child(4)').removeClass('current').addClass('visited');
+        $('.breadcrumbs li:nth-child(4) em').replaceWith('<a href="cart.html?page=cart&section=shipping">Shipping</a>');
+        $('.breadcrumbs li:nth-child(5)').addClass('current');
+    }
+
+    //    $('head').append('<link href="css/bcstyle.css" rel="stylesheet">')
     //breadcrumb cart
-    $('#cart_items .breadcrumb li:nth-child(2)').html('');
+    //    $('#cart_items .breadcrumb li:nth-child(2)').html('');
     //checkout button
-    $('.total_area .check_out').attr('href', 'checkout.html?page=checkout');
+    $('.update').css('display', 'none');
+    $('.check_out').css('margin-left', '40px');
+    $('.total_area .check_out').on('click', function () {
+        //        if not signin
+        window.open('cart.html?page=cart&section=signin', '_self');
+        //        else proceed to adress selection
+    });
     $.getJSON("insert_cart.php", {
         id: "abc",
         userid: 14
@@ -191,7 +231,7 @@ if (page == "home") {
     recommendedItems();
 } else if (page == "checkout") {
     $('table thead .cart_menu td:last-child').remove();
-    $('.checkout-options .nav li:nth-child(3) a').attr('href', 'cart.html?page=cart')
+    $('.checkout-options .nav li:nth-child(3) a').attr('href', 'cart.html?page=cart&section=summary')
     $.getJSON("insert_cart.php", {
         id: "abc",
         userid: 14
