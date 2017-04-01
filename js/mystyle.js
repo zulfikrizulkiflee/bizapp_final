@@ -7,9 +7,8 @@ $(window).load(function () {
     }
 });
 $(window).ready(function () {
-    $('.shop-menu nav')
     $('.chose_area').css('visibility', 'hidden');
-    $('.check_out').text('Proceed to Check Out');
+    $('.check_out').html('Proceed to Check Out <i class="fa fa-angle-double-right"></i>');
     //breadcrumb cart
     $('#cart_items .breadcrumbs .breadcrumb').remove();
     //    $('#cart_items .breadcrumbs').html('<table style="width:100%;border:1px solid black;margin-bottom:10px;background-color:#F0F0E9;font-size:1.2vw;"><tr><td class="summary" style="width:15%;padding:1em 2em">Summary</td><td class="arrowhead" style="width:5%"></td><td class="signin" style="width:15%;padding:1em 2em">Sign In</td><td class="arrowhead" style="width:5%"></td><td class="address" style="width:15%;padding:1em 2em">Address</td><td class="arrowhead" style="width:5%"></td><td class=""shipping" style="width:15%;padding:1em 2em">Shipping</td><td class="arrowhead" style="width:5%"></td><td class="payment" style="width:15%;padding:1em 2em">Payment</td><td class="arrowhead" style="width:5%"></td></tr></table>');
@@ -70,7 +69,7 @@ $(window).ready(function () {
     $('.category-tab .tab-content .tab-pane:first-child').addClass('active').addClass('in');
 
     //add modal
-    var modal_str = '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"> <div class="modal-dialog" role="document"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> <h4 class="modal-title" id="myModalLabel" style="color:#2bc44c"><i class="fa fa-check"></i> Item successfully added to cart</h4> </div> <div class="modal-body"><div class="row"> <div class="col-sm-12"> <div class="col-sm-3 cart-img-modal" style="border: 1px solid #d6d4d4;height:250px;background:url()no-repeat center center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;"></div> <div class="col-sm-4 current-item-cart" style="border-right:1px solid black;min-height: 250px;padding-top:25px"> <div class="row"> <div class="col-sm-12"><b></b></div> <div class="col-sm-12"><b>Product ID</b></div> <div class="col-sm-12"><b>Price </b> RM</div> </div> </div> <div class="col-sm-5 cart-info-modal" style="background-color:#FAFAFA;min-height: 250px;padding-top:25px"> <div class="col-sm-12"><b>You have 1 item in your cart</b></div> <div class="col-sm-12"><b>Total price</b> RM</div> </div> </div> </div></div> <div class="modal-footer"> <button type="button" class="btn btn-primary" data-dismiss="modal">Continue Shopping</button> <button type="button" class="btn btn-primary open-cart">Proceed to Cart</button> </div> </div> </div> </div>';
+    var modal_str = '<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"> <div class="modal-dialog" role="document"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> <h4 class="modal-title" id="myModalLabel" style="color:#2bc44c"><i class="fa fa-check"></i> Item successfully added to cart</h4> </div> <div class="modal-body"><div class="row"> <div class="col-sm-12"> <div class="col-sm-3 cart-img-modal" style="border: 1px solid #d6d4d4;height:250px;background:url()no-repeat center center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;"></div> <div class="col-sm-4 current-item-cart" style="border-right:1px solid black;min-height: 250px;padding-top:25px"> <div class="row"> <div class="col-sm-12"><b></b></div> <div class="col-sm-12"><b>Product ID</b></div> <div class="col-sm-12"><b>Price </b> RM</div> </div> </div> <div class="col-sm-5 cart-info-modal" style="background-color:#FAFAFA;min-height: 250px;padding-top:25px"> <div class="col-sm-12"><b>You have 1 item in your cart</b></div> <div class="col-sm-12"><b>Total price</b> RM</div> </div> </div> </div></div> <div class="modal-footer"> <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-angle-double-left"></i> Continue Shopping</button> <button type="button" class="btn btn-primary open-cart">Proceed to Cart <i class="fa fa-angle-double-right"></i></button> </div> </div> </div> </div>';
     $('body').append(modal_str);
     $('.open-cart').on('click', function () {
         window.open('cart.html?page=cart&section=summary', '_self');
@@ -94,7 +93,7 @@ $(window).ready(function () {
     $('#header .shop-menu ul li:nth-child(2)').css('display', 'none');
     $('#header .shop-menu ul li:nth-child(3)').css('display', 'none');
     $('#header .shop-menu ul li:nth-child(4) a').attr('href', 'cart.html?page=cart&section=summary');
-    $('#header .shop-menu ul li:last-child').html('<a href="login.html"><i class="fa fa-lock"></i> Login/Signup</a>');
+    $('#header .shop-menu ul li:last-child').html('<a href="login.html?page=logsign"><i class="fa fa-lock"></i> Login/Signup</a>');
     //    header end
 
     //    @media function

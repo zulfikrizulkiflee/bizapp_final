@@ -131,6 +131,8 @@ if (page == "home") {
     recommendedItems();
 } else if (page == "cart") {
     var section = $.urlParam('section');
+    var up = "up";
+    var down = "down";
     if (section == "summary") {
         $('.breadcrumbs li:nth-child(1)').addClass('current');
     } else if (section == "signin") {
@@ -167,18 +169,22 @@ if (page == "home") {
     //breadcrumb cart
     //    $('#cart_items .breadcrumb li:nth-child(2)').html('');
     //checkout button
-    $('.update').css('display', 'none');
+    $('.update').html('Clear My Cart <i class="fa fa-trash-o"></i>');
     $('.check_out').css('margin-left', '40px');
     $('.total_area .check_out').on('click', function () {
         //        if not signin
         window.open('cart.html?page=cart&section=signin', '_self');
         //        else proceed to adress selection
     });
-    $.getJSON("insert_cart.php", {
-        id: "abc",
+    $.getJSON("get_cart.php", {
+        action_get: "display",
         userid: 14
     }, function (dataCartTable) {
-        //        console.log(dataCartTable);
+        console.log(dataCartTable);
+        if (dataCartTable.length == 0) {
+            $('.cart_info table tbody').html('<tr><td colspan="5"><div class="col-sm-12 not-found"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Your cart is empty</div></td></tr>');
+            $('#do_action').css('display', 'none');
+        }
         var price_sum = 0;
         $.each(dataCartTable, function (i, dataCartTable) {
             var item_price = dataCartTable.price_sum;
@@ -201,19 +207,45 @@ if (page == "home") {
                     var totalprice_item = 0;
                     totalprice_item = dataCartTable.quantity * dataCartInfoSingle.price;
 
-                    var dom_cart_single = ('<tr> <td class="" style="width:10%"> <a href="javascript:void(0)"><img src="' + image + '" alt="" style="height:130px;width:120px" onError="this.onerror=null;this.src=\'' + img_filler + '\';"></a> </td> <td class="cart_description" style="width:30%"> <h4><a href="javascript:void(0)">' + dataCartInfoSingle.productname + '</a></h4> <p>Product ID: ' + dataCartInfoSingle.id + '</p> </td> <td class="cart_price" style="width:15%"> <p>RM' + dataCartInfoSingle.price + '</p> </td> <td class="cart_quantity" style="width:15%;padding-left: 4%;"> <div class="cart_quantity_button"> <a class="cart_quantity_up" href=""> + </a> <input class="cart_quantity_input" type="text" name="quantity" value="' + dataCartTable.quantity + '" autocomplete="off" size="2"> <a class="cart_quantity_down" href=""> - </a> </div> </td> <td class="cart_total" style="width:15%;text-align:right"> <p class="cart_total_price">RM' + parseFloat(totalprice_item).toFixed(2) + '</p> </td> <td class="" style="width:10%;text-align:center"> <a class="cart_quantity_delete" href=""><i class="fa fa-times"></i></a> </td> </tr>');
+
+
+                    var dom_cart_single = ('<tr> <td class="" style="width:10%"> <a href="javascript:void(0)"><img src="' + image + '" alt="" style="height:130px;width:120px" onError="this.onerror=null;this.src=\'' + img_filler + '\';"></a> </td> <td class="cart_description" style="width:30%"> <h4><a href="javascript:void(0)">' + dataCartInfoSingle.productname + '</a></h4> <p>Product ID: ' + dataCartInfoSingle.id + '</p> </td> <td class="cart_price" style="width:15%"> <p>RM' + dataCartInfoSingle.price + '</p> </td> <td class="cart_quantity" style="width:15%;padding-left: 4%;"> <div class="cart_quantity_button"> <a class="cart_quantity_up" onclick="quantityChange(' + up + ',' + parseFloat(totalprice_item / dataCartTable.quantity).toFixed(2) + ')" href="javascript:void(0)"> + </a> <input class="cart_quantity_input" type="text" name="quantity" value="' + dataCartTable.quantity + '" autocomplete="off" size="2" readonly> <a class="cart_quantity_down" onclick="quantityChange(' + down + ',' + parseFloat(totalprice_item / dataCartTable.quantity).toFixed(2) + ')" href="javascript:void(0)"> - </a> </div> </td> <td class="cart_total" style="width:15%;text-align:right"> <p class="cart_total_price">RM' + parseFloat(totalprice_item).toFixed(2) + '</p> </td> <td class="" style="width:10%;text-align:center"> <a class="cart_quantity_delete" onclick="removeItem(' + dataCartInfoSingle.id + ')" href="javascript:void(0)"><i class="fa fa-times"></i></a> </td> </tr>');
 
                     //                    console.log(dom_cart_single);
                     $('.cart_info table tbody').append(dom_cart_single);
                 });
             });
-            var dom_cart_table = ('');
-
+            //            var dom_cart_table = ('');
             //        $('#myModal .modal-body .cart-info-modal').html(dom_cart);
         });
         $('.total_area ul li:first-child span').text('RM' + parseFloat(price_sum).toFixed(2));
         $('.total_area ul li:last-child span').text('RM' + parseFloat(price_sum).toFixed(2));
+
     });
+
+    function quantityChange(change, price) {
+        var init_quantity = parseInt($('.cart_quantity_input').attr('value'));
+        if (change == "up") {
+            init_quantity = init_quantity + 1;
+            $('.cart_quantity_input').attr('value', init_quantity);
+            var price_sum = parseFloat(price * init_quantity).toFixed(2);
+            $('.cart_total_price').text('RM' + price_sum);
+        } else if (change == "down" && init_quantity > 1) {
+            init_quantity = init_quantity - 1;
+            $('.cart_quantity_input').attr('value', init_quantity);
+            var price_sum = parseFloat(price * init_quantity).toFixed(2);
+            $('.cart_total_price').text('RM' + price_sum);
+        }
+    }
+
+    function removeItem(id) {
+        $.getJSON("get_cart.php", {
+            action_get: "delete",
+            id: id,
+        }, function (dataCartInfo) {
+
+        });
+    }
 } else if (page == "item") {
     var uid = $(this).data('id');
 
@@ -229,62 +261,24 @@ if (page == "home") {
         });
     });
     recommendedItems();
-} else if (page == "checkout") {
-    $('table thead .cart_menu td:last-child').remove();
-    $('.checkout-options .nav li:nth-child(3) a').attr('href', 'cart.html?page=cart&section=summary')
-    $.getJSON("insert_cart.php", {
-        id: "abc",
-        userid: 14
-    }, function (dataCartTable) {
-        var dataNum = dataCartTable.length;
-        var counter = 1;
-        //        console.log(dataCartTable);
-        var price_sum = 0;
-        $.each(dataCartTable, function (i, dataCartTable) {
-            var item_price = dataCartTable.price_sum;
+} else if (page == "logsign") {
+    $('#header .shop-menu ul li:last-child a').addClass('active');
+    $('#login-form').submit(function (e) {
 
-            price_sum = (parseFloat(item_price) + price_sum);
-            $.getJSON("get_single_product.php", {
-                id: dataCartTable.prod_id
-            }, function (dataCartInfoSingle) {
+        var url = "post_login.php"; // the script where you handle the form input.
 
-                //                $('.total').attr('colspan', '2');
-                //                console.log(dataCartInfoSingle);
-                $.each(dataCartInfoSingle, function (i, dataCartInfoSingle) {
-                    var link = "http://corrad.visionice.net/bizapp/upload/product/";
-                    var image = link + dataCartInfoSingle.attachment;
-                    var img_filler = "images/myimages/not_available.gif";
-                    if (image == link) {
-                        image = img_filler;
-                    } else {
-                        image = image;
-                    }
-
-                    var totalprice_item = 0;
-                    totalprice_item = dataCartTable.quantity * dataCartInfoSingle.price;
-
-                    var dom_cart_single = ('<tr> <td class="" style="width:10%"> <a href="javascript:void(0)"><img src="' + image + '" alt="" style="height:130px;width:120px" onError="this.onerror=null;this.src=\'' + img_filler + '\';"></a> </td> <td class="cart_description" style="width:30%"> <h4><a href="javascript:void(0)">' + dataCartInfoSingle.productname + '</a></h4> <p>Product ID: ' + dataCartInfoSingle.id + '</p> </td> <td class="cart_price" style="width:15%"> <p>RM' + dataCartInfoSingle.price + '</p> </td> <td class="cart_quantity" style="width:15%;padding-left: 7%;"> <input class="cart_quantity_input" type="text" readonly="readonly" name="quantity" value="' + dataCartTable.quantity + '" autocomplete="off" size="2">  </td> <td class="cart_total" style="width:15%;text-align:right;padding-right:2em"> <p class="cart_total_price">RM' + parseFloat(totalprice_item).toFixed(2) + '</p></tr>');
-
-                    //                    console.log(dom_cart_single);
-                    $('.cart_info table tbody').append(dom_cart_single);
-
-                    if (dataNum == counter) {
-                        var dom_cart_table_pricing = ('<tr style="background-color:#F0F0E9"> <td colspan="3">&nbsp;</td><td style="padding-top:1em"><p class="cart_total_price">Total</p></td> <td colspan="2" style="text-align:right;padding-top:1em;padding-right:2em"> <p class="cart_total_price">RM' + parseFloat(price_sum).toFixed(2) + '</p> </td></tr>');
-
-                        $('.cart_info table tbody').append(dom_cart_table_pricing);
-                    }
-                    counter++;
-                });
-
-            });
-
-
-            //        $('#myModal .modal-body .cart-info-modal').html(dom_cart);
+        var login_detail = $('#login-form').serialize();
+        //        console.log(login_detail);
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: login_detail, // serializes the form's elements.
+            success: function (data) {
+                alert(data); // show response from the php script.
+            }
         });
-        //        $('.total_area ul li:first-child span').text('RM' + parseFloat(price_sum).toFixed(2));
-        //        $('.total_area ul li:last-child span').text('RM' + parseFloat(price_sum).toFixed(2));
 
-
+        e.preventDefault(); // avoid to execute the actual submit of the form.
     });
 }
 
@@ -353,14 +347,15 @@ function addToCart() {
         var sellerid = $(this).data('pid');
         //        console.log(uid);
 
-        $.getJSON("insert_cart.php", {
+        $.getJSON("get_cart.php", {
             id: uid,
+            action_get: "insert",
             userid: 14,
             quantity: 1,
             sellerid: sellerid
         }, function (dataCartInfo) {
             var cart_quantity = dataCartInfo.length;
-            //            console.log(dataCartInfo);
+            console.log(dataCartInfo);
             var price_sum = 0;
             $.each(dataCartInfo, function (i, dataCartInfo) {
                 var item_price = dataCartInfo.price_sum;
@@ -399,5 +394,28 @@ function addToCart() {
             backdrop: 'static'
         });
 
+    });
+}
+
+$('.update').on('click', function () {
+    clearCart();
+});
+
+function clearCart() {
+    $.getJSON("get_cart.php", {
+        action_get: "clear",
+        userid: 14,
+    }, function (dataCartInfo) {
+        var cart_quantity = dataCartInfo.length;
+        console.log(dataCartInfo);
+        var price_sum = 0;
+        $.each(dataCartInfo, function (i, dataCartInfo) {
+            var item_price = dataCartInfo.price_sum;
+
+            price_sum = (parseFloat(item_price) + price_sum);
+            var dom_cart = ('<div class="col-sm-12"><b>You have ' + cart_quantity + ' item in your cart</b></div> <div class="col-sm-12"><b>Total price</b> RM' + parseFloat(price_sum).toFixed(2) + '</div>');
+
+            $('#myModal .modal-body .cart-info-modal').html(dom_cart);
+        });
     });
 }

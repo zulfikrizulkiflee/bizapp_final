@@ -1,3 +1,9 @@
+.modal-footer button:hover {
+    color: #333 !important;
+    background-color: #ebebeb !important;
+    border-color: #adadad !important;
+}
+
 em {
     font-style: normal !important;
 }
