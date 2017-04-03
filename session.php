@@ -1,29 +1,26 @@
 <?php
-   include('conn.php');
-   session_start();
+session_start();
+    $process=$_GET['process'];
+    
+    if($process == 'check'){
+        if(isset($_SESSION['id'])){
+            $id = $_SESSION['id'];
+            $username = $_SESSION['username'];
+            $myArray = array('id' => $id, 'username' => $username);
+            echo json_encode($myArray);
+        }else{
+            echo "no data";
+        }
+    }
 
-   $user_check = "";
-    $user_id;
-   
-   if(isset($_SESSION['login_user'])){
-       $user_check = $_SESSION['login_user'];
-   }else{
-       $user_id=15;
-   }
-   
-   $ses_sql = mysqli_query($conn,"select * from comm_user where username = '$user_check' ");
-   
-   $row = mysqli_fetch_array($ses_sql,MYSQLI_ASSOC);
-   
-   $login_session = $row['username'];
+    if($process == 'set'){
+        $_SESSION['id']=$_GET['id'];
+        $_SESSION['username']=$_GET['username'];
+        echo $_SESSION['username'];
+    }
 
-   $user_id = $row['id'];
-
-   $profile_pic = $row['profile_pic'];
-
-   $user_name = $row['name'];
-
-   $email = $row['email'];
-
-   $date_register = $row['date_register'];
+    if($process == 'logout'){
+        session_destroy();
+        echo "logout";
+    }
 ?>

@@ -1,12 +1,20 @@
 $(window).load(function () {
+    var landingURL = window.location.href;
     var redirectURL = 'http://localhost/Project%20BizApp/bizapp/index.html?page=home';
     var currentURL = 'http://localhost/Project%20BizApp/bizapp/index.html';
-    var landingURL = window.location.href;
-    if (landingURL == currentURL) {
-        window.location = redirectURL;
+    var variation1 = 'http://localhost/Project%20BizApp/bizapp/';
+
+    if (landingURL == currentURL || landingURL == variation1) {
+        window.location.replace(redirectURL);
     }
 });
 $(window).ready(function () {
+    $('#header .shop-menu ul li:nth-child(2)').css('display', 'none');
+    $('#header .shop-menu ul li:nth-child(3)').css('display', 'none');
+    $('#header .shop-menu ul li:nth-child(4) a').attr('href', 'cart.html?page=cart&section=summary');
+    $('#header .shop-menu ul li:last-child').html('<a href="login.html?page=logsign"><i class="fa fa-lock"></i> Login/Signup</a>');
+    $.getScript("js/session_script.js", function () {});
+
     $('.chose_area').css('visibility', 'hidden');
     $('.check_out').html('Proceed to Check Out <i class="fa fa-angle-double-right"></i>');
     //breadcrumb cart
@@ -90,10 +98,6 @@ $(window).ready(function () {
     $('#header .nav-pills li:nth-child(2) a').html('<i class="fa fa-envelope"></i> admin@bizapp.com.my');
     $('#header .header-bottom .mainmenu').css('display', 'none');
     $('#header .navbar-toggle').attr('style', 'display:none');
-    $('#header .shop-menu ul li:nth-child(2)').css('display', 'none');
-    $('#header .shop-menu ul li:nth-child(3)').css('display', 'none');
-    $('#header .shop-menu ul li:nth-child(4) a').attr('href', 'cart.html?page=cart&section=summary');
-    $('#header .shop-menu ul li:last-child').html('<a href="login.html?page=logsign"><i class="fa fa-lock"></i> Login/Signup</a>');
     //    header end
 
     //    @media function

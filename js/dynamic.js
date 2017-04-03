@@ -1,3 +1,5 @@
+$.getScript("js/session_script.js", function () {});
+
 $.urlParam = function (name) {
     var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
     return results[1] || 0;
@@ -72,9 +74,7 @@ if (page == "home") {
         });
     });
 
-    $.getJSON("get_category_item.php", {
-        code: code
-    }, function (dataCategoryItems) {
+    $.getJSON("get_category_item.php", function (dataCategoryItems) {
         //        console.log(dataCategoryItems);
         if (dataCategoryItems.length == 0) {
             $('.features_items').append('<div class="col-sm-12 not-found"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> Sorry, no products found...</div>');
@@ -263,23 +263,38 @@ if (page == "home") {
     recommendedItems();
 } else if (page == "logsign") {
     $('#header .shop-menu ul li:last-child a').addClass('active');
-    $('#login-form').submit(function (e) {
-
-        var url = "post_login.php"; // the script where you handle the form input.
-
-        var login_detail = $('#login-form').serialize();
-        //        console.log(login_detail);
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: login_detail, // serializes the form's elements.
-            success: function (data) {
-                alert(data); // show response from the php script.
-            }
-        });
-
+    $('#login-form').on('submit', function (e) {
         e.preventDefault(); // avoid to execute the actual submit of the form.
+        var login_detail = $(this).serialize();
+        //        console.log(login_detail);
+        $.getJSON('post_login.php?' + login_detail, function (dataLogin) {
+            var id_user = dataLogin[0].id;
+            var username = dataLogin[0].username;
+            $.get("session.php", {
+                process: 'set',
+                id: id_user,
+                username: username
+            }, function (sessionData1) {
+                console.log(sessionData1);
+            });
+        });
     });
+
+    $('#signup-form').on('submit', function (e) {
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+        var signup_detail = $(this).serialize();
+        //        console.log(signup_detail);
+        $.get('post_login.php?' + signup_detail, function (dataSignup) {
+            //            console.log(dataSignup);
+            $('#myModal .modal-header').html('');
+            $('#myModal .modal-body').html('');
+            $('#myModal .modal-footer').html('<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button> <button type="button" class="btn btn-primary">Proceed To Login</button>');
+            $('#myModal').modal('show', {
+                backdrop: 'static'
+            });
+        });
+    });
+
 }
 
 function recommendedItems() {
@@ -350,7 +365,7 @@ function addToCart() {
         $.getJSON("get_cart.php", {
             id: uid,
             action_get: "insert",
-            userid: 14,
+            userid: user_id,
             quantity: 1,
             sellerid: sellerid
         }, function (dataCartInfo) {
