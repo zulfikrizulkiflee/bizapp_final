@@ -24,7 +24,7 @@ $(window).ready(function () {
     //    $('#cart_items .breadcrumbs').html('<table style="width:100%;border:1px solid black;margin-bottom:10px;background-color:#F0F0E9;font-size:1.2vw;"><tr><td class="summary" style="width:15%;padding:1em 2em">Summary</td><td class="arrowhead" style="width:5%"></td><td class="signin" style="width:15%;padding:1em 2em">Sign In</td><td class="arrowhead" style="width:5%"></td><td class="address" style="width:15%;padding:1em 2em">Address</td><td class="arrowhead" style="width:5%"></td><td class=""shipping" style="width:15%;padding:1em 2em">Shipping</td><td class="arrowhead" style="width:5%"></td><td class="payment" style="width:15%;padding:1em 2em">Payment</td><td class="arrowhead" style="width:5%"></td></tr></table>');
     //    $('#cart_items .breadcrumbs').html('<ul id="breadcrumbs-two"> <li><a href="javascript:void(0);">Lorem ipsum</a></li> <li><a href="javascript:void(0);">Vivamus nisi eros</a></li> <li><a href="javascript:void(0);">Nulla sed lorem risus</a></li> <li><a href="javascript:void(0);">Nam iaculis commodo</a></li> <li><a href="javascript:void(0);">Current crumb</a></li> </ul>');
     //    $('#cart_items .breadcrumbs').html('<div class="row" style="margin: 0px 0px 10px 0;">  <div id="bc1" class="btn-group btn-breadcrumb">  <div class="btn btn-default">Summary</div> <a href="#" class="btn btn-default"><div>Sign In</div></a> <a href="#" class="btn btn-default"><div>Address</div></a> <a href="#" class="btn btn-default"><div>Shipping</div></a> <a href="#" class="btn btn-default"><div>Payment</div></a> </div>');
-    $('#cart_items .breadcrumbs').html('<ol class="cd-multi-steps text-bottom count"> <li class=""><em>Select Shop</em></li><li class=""><em>Summary</em></li> <li class=""><em>Sign In</em></li> <li class=""><em>Address</em></li> <li class=""><em>Payment</em></li><li class=""><em>Completed</em></li> </ol>');
+    $('#cart_items .breadcrumbs').html('<ol class="cd-multi-steps text-bottom count"> <li class=""><em>Summary</em></li> <li class=""><em>Sign In</em></li> <li class=""><em>Address</em></li> <li class=""><em>Payment</em></li><li class=""><em>Completed</em></li> </ol>');
 
     $('.table').css('margin-bottom', '0');
     //category tab
@@ -94,12 +94,17 @@ $(window).ready(function () {
     $.getScript("js/dynamic.js", function () {});
     //    header start
     $('link[rel="shortcut icon"]').attr('href', 'images/ico/favicon.png');
-    $('#header .logo a img').attr('height', '60px').attr('src', 'images/myimages/logo.svg');
+    $('#header .logo a img').attr('height', '60px').attr('src', 'images/masmed/baner2025.png');
     $('#header .logo').next().css('display', 'none');
     $('#header .nav-pills li:first-child a').html('<i class="fa fa-phone"></i> +603 90593800');
-    $('#header .nav-pills li:nth-child(2) a').html('<i class="fa fa-envelope"></i> admin@bizapp.com.my');
+    $('#header .nav-pills li:nth-child(2) a').html('<i class="fa fa-envelope"></i> admin@masmedmall.com.my');
     $('#header .header-bottom .mainmenu').css('display', 'none');
     $('#header .navbar-toggle').attr('style', 'display:none');
+    $('.get').css('background', '#651270');
+    $('.left-sidebar h2, .brands_products h2').css('color', '#651270');
+    $('h2').css('color', '#651270');
+    $('a#scrollUp').css('background', '#651270');
+
     //    header end
 
     //    @media function
@@ -128,7 +133,7 @@ $(window).ready(function () {
     });
     //});@media end
     //  slider
-    $('#slider .carousel-inner .item h1').html('<span>BIZ</span>APP');
+    $('#slider .carousel-inner .item h1').html('<span style="color:#651270">MASMED</span>Mall');
     $('#slider .carousel-inner .item:first-child h2').html('Latest Marketplace For You');
     $('#slider .carousel-inner .item:nth-child(2) h2').html('Get Your Favourite Product Here');
     $('#slider .carousel-inner .item:nth-child(3) h2').html('More Than 15,000 Products To Be Browsed');
@@ -139,7 +144,7 @@ $(window).ready(function () {
 
 
     //footer
-    $('.companyinfo h2').html('<span>Biz</span>-App');
+    $('.companyinfo h2').html('<span style="color:#651270">MASMED</span><span style="color:#B4B1AB">Mall</span>');
     $('.address p').text('9-2, Jalan Tasik Selatan 3, Bandar Tasik Selatan');
     $('#footer .footer-bottom .container .pull-right').html('');
 });

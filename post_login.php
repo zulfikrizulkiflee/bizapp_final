@@ -9,16 +9,28 @@
        $password = stripslashes($_GET['pw']);
        $password = mysqli_real_escape_string($conn,$password);
        $myArray = array();
+        
        if ($result = $conn->query("SELECT id,username FROM comm_user WHERE username='$username' AND password='".md5($password)."' AND active=1 LIMIT 1")) {
            $tempArray = array();
+           $typeArray = array('usertype'=>'user');
            while($row = $result->fetch_object()) {
                $tempArray = $row;
+//               array_push($tempArray,'type:user');
                array_push($myArray, $tempArray);
-           }
-           echo json_encode($myArray);
-       }else{
-           echo "Error: " . $conn->error;
+               $myArray = (object)array_merge((array)$row, $typeArray);
+           }      
        }
+        
+        if ($result = $conn->query("SELECT pid AS id,penggunaid AS username FROM track_user WHERE penggunaid='$username' AND katalaluan='$password' AND roleid NOT IN (0) LIMIT 1")) {
+            $tempArray = array();
+            $typeArray = array('usertype'=>'shop');
+            while($row = $result->fetch_object()) {
+                $tempArray = $row;
+                array_push($myArray, $tempArray);
+                $myArray = (object)array_merge((array)$row, $typeArray);
+            }  
+        }
+        echo json_encode(array($myArray));
         $result->close();
     }  
 
@@ -55,10 +67,12 @@
 
                         // send email
                         mail($to,$subject,$message,$header);
-                        echo "YOUR REGISTRATION IS COMPLETED...";
+                        echo "Registration Complete, ";
+                        echo "Please check your email";
                     } 
                 } else { 
-                     echo "SORRY...YOU ARE ALREADY REGISTERED USER...";
+                     echo "Your Email Address Already Being Used, ";
+                     echo "Please login to continue";
                 } 
             }
         

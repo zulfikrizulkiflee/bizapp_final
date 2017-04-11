@@ -607,6 +607,7 @@ ul.sub-menu {
 }
 
 .carousel-indicators li.active {
+    /*    background: #651270;*/
     background: #FE980F;
 }
 
