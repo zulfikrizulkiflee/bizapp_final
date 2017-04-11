@@ -217,41 +217,41 @@ if (page == "home") {
             }
 
 
-            $.each(productObj, function (i, dataCartInfo) {
-                var price_sum = 0;
-                $.each(productObj, function (i, dataCartTable) {
-                    var item_price = dataCartTable.price;
 
-                    price_sum = (parseFloat(item_price) + price_sum);
-                    $.getJSON("get_single_product.php", {
-                        id: dataCartTable.id
-                    }, function (dataCartInfoSingle) {
-                        //                console.log(dataCartInfoSingle);
-                        $.each(dataCartInfoSingle, function (i, dataCartInfoSingle) {
-                            var link = "http://corrad.visionice.net/bizapp/upload/product/";
-                            var image = link + dataCartInfoSingle.attachment;
-                            var img_filler = "images/myimages/not_available.gif";
-                            if (image == link) {
-                                image = img_filler;
-                            } else {
-                                image = image;
-                            }
+            var price_sum = 0;
+            $.each(productObj, function (i, dataCartTable) {
+                var item_price = dataCartTable.price;
 
-                            var totalprice_item = 0;
-                            totalprice_item = dataCartTable.quantity * dataCartInfoSingle.price;
+                price_sum = (parseFloat(item_price) + price_sum);
+                $.getJSON("get_single_product.php", {
+                    id: dataCartTable.id
+                }, function (dataCartInfoSingle) {
+                    //                console.log(dataCartInfoSingle);
+                    $.each(dataCartInfoSingle, function (i, dataCartInfoSingle) {
+                        var link = "http://corrad.visionice.net/bizapp/upload/product/";
+                        var image = link + dataCartInfoSingle.attachment;
+                        var img_filler = "images/myimages/not_available.gif";
+                        if (image == link) {
+                            image = img_filler;
+                        } else {
+                            image = image;
+                        }
 
-                            var dom_cart_single = ('<tr> <td class="" style="width:10%"> <a href="javascript:void(0)"><img src="' + image + '" alt="" style="height:130px;width:120px" onError="this.onerror=null;this.src=\'' + img_filler + '\';"></a> </td> <td class="cart_description" style="width:30%"> <h4><a href="javascript:void(0)">' + dataCartInfoSingle.productname + '</a></h4> <p>Product ID: ' + dataCartInfoSingle.id + '</p> </td> <td class="cart_price" style="width:15%"> <p>RM' + dataCartInfoSingle.price + '</p> </td> <td class="cart_quantity" style="width:15%;padding-left: 4%;"> <div class="cart_quantity_button"> <a class="cart_quantity_up" onclick="quantityChange(' + up + ',' + parseFloat(totalprice_item / dataCartTable.quantity).toFixed(2) + ')" href="javascript:void(0)"> + </a> <input class="cart_quantity_input" type="text" name="quantity" value="' + dataCartTable.quantity + '" autocomplete="off" size="2" readonly> <a class="cart_quantity_down" onclick="quantityChange(' + down + ',' + parseFloat(totalprice_item / dataCartTable.quantity).toFixed(2) + ')" href="javascript:void(0)"> - </a> </div> </td> <td class="cart_total" style="width:15%;text-align:right"> <p class="cart_total_price">RM' + parseFloat(totalprice_item).toFixed(2) + '</p> </td> <td class="" style="width:10%;text-align:center"> <a class="cart_quantity_delete" onclick="removeItem(' + dataCartInfoSingle.id + ')" href="javascript:void(0)"><i class="fa fa-times"></i></a> </td> </tr>');
+                        var totalprice_item = 0;
+                        totalprice_item = dataCartTable.quantity * dataCartInfoSingle.price;
 
-                            //                    console.log(dom_cart_single);
-                            $('.cart_info table tbody').append(dom_cart_single);
-                        });
+                        var dom_cart_single = ('<tr> <td class="" style="width:10%"> <a href="javascript:void(0)"><img src="' + image + '" alt="" style="height:130px;width:120px" onError="this.onerror=null;this.src=\'' + img_filler + '\';"></a> </td> <td class="cart_description" style="width:30%"> <h4><a href="javascript:void(0)">' + dataCartInfoSingle.productname + '</a></h4> <p>Product ID: ' + dataCartInfoSingle.id + '</p> </td> <td class="cart_price" style="width:15%"> <p>RM' + dataCartInfoSingle.price + '</p> </td> <td class="cart_quantity" style="width:15%;padding-left: 4%;"> <div class="cart_quantity_button"> <a class="cart_quantity_up" onclick="quantityChange(' + up + ',' + parseFloat(totalprice_item / dataCartTable.quantity).toFixed(2) + ')" href="javascript:void(0)"> + </a> <input class="cart_quantity_input" type="text" name="quantity" value="' + dataCartTable.quantity + '" autocomplete="off" size="2" readonly> <a class="cart_quantity_down" onclick="quantityChange(' + down + ',' + parseFloat(totalprice_item / dataCartTable.quantity).toFixed(2) + ')" href="javascript:void(0)"> - </a> </div> </td> <td class="cart_total" style="width:15%;text-align:right"> <p class="cart_total_price">RM' + parseFloat(totalprice_item).toFixed(2) + '</p> </td> <td class="" style="width:10%;text-align:center"> <a class="cart_quantity_delete" onclick="removeItem(' + dataCartInfoSingle.id + ')" href="javascript:void(0)"><i class="fa fa-times"></i></a> </td> </tr>');
+
+                        //                    console.log(dom_cart_single);
+                        $('.cart_info table tbody').append(dom_cart_single);
                     });
-                    //            var dom_cart_table = ('');
-                    //        $('#myModal .modal-body .cart-info-modal').html(dom_cart);
                 });
-                $('.total_area ul li:first-child span').text('RM' + parseFloat(price_sum).toFixed(2));
-                $('.total_area ul li:last-child span').text('RM' + parseFloat(price_sum).toFixed(2));
+                //            var dom_cart_table = ('');
+                //        $('#myModal .modal-body .cart-info-modal').html(dom_cart);
             });
+            $('.total_area ul li:first-child span').text('RM' + parseFloat(price_sum).toFixed(2));
+            $('.total_area ul li:last-child span').text('RM' + parseFloat(price_sum).toFixed(2));
+
 
         }
 
