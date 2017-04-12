@@ -50,7 +50,7 @@ $(window).ready(function () {
                     } else {
                         image = image;
                     }
-                    var dom_product_top = ('<div class="col-sm-3"> <div class="product-image-wrapper"> <div class="single-products"> <div class="productinfo text-center"> <img src="' + image + '" alt="" style="height: 150px !important;" onError="this.onerror=null;this.src=\'' + img_filler + '\';"> <h2>RM' + dataTopProducts.price + '</h2> <p class="truncate" title="' + dataTopProducts.productname + '">' + dataTopProducts.productname + '</p> <a href="#" class="btn btn-default add-to-cart" data-id="' + dataTopProducts.id + '"><i class="fa fa-shopping-cart"></i>Add to cart</a> </div> </div> </div> </div>');
+                    var dom_product_top = ('<div class="col-xs-6 col-sm-3"> <div class="product-image-wrapper"> <div class="single-products"> <div class="productinfo text-center"> <img src="' + image + '" alt="" style="height: 150px !important;" onError="this.onerror=null;this.src=\'' + img_filler + '\';"> <h2>RM' + dataTopProducts.price + '</h2> <p class="truncate" title="' + dataTopProducts.productname + '">' + dataTopProducts.productname + '</p> <a href="#" class="btn btn-default add-to-cart" data-id="' + dataTopProducts.id + '"><i class="fa fa-shopping-cart"></i>Add to cart</a> </div> </div> </div> </div>');
 
                     $('.category-tab #tab0').append(dom_product_top);
                 });
@@ -67,7 +67,7 @@ $(window).ready(function () {
                     } else {
                         image = image;
                     }
-                    var dom_seller_top = ('<div class="col-sm-3"> <div class="product-image-wrapper"> <div class="single-products"> <div class="productinfo text-center" style=" padding-top: 15px; "> <img src="' + image + '" alt="" style="border-radius: 50% !important;border: 1px solid #fe980f !important;height: 150px !important;width: 150px !important;" onError="this.onerror=null;this.src=\'' + img_filler + '\';"> <h2 class="truncate" title="' + dataTopSeller.nama + '" style="font-size:14px">' + dataTopSeller.nama + '</h2> <a href="#" class="btn btn-default view-shop"><i class="fa fa-picture-o"></i> View Shop</a> </div> </div> </div> </div>');
+                    var dom_seller_top = ('<div class="col-xs-6 col-sm-3"> <div class="product-image-wrapper"> <div class="single-products"> <div class="productinfo text-center" style=" padding-top: 15px; "> <img src="' + image + '" alt="" style="border-radius: 50% !important;border: 1px solid #fe980f !important;height: 150px !important;width: 150px !important;" onError="this.onerror=null;this.src=\'' + img_filler + '\';"> <h2 class="truncate" title="' + dataTopSeller.nama + '" style="font-size:14px">' + dataTopSeller.nama + '</h2> <a href="#" class="btn btn-default view-shop"><i class="fa fa-picture-o"></i> View Shop</a> </div> </div> </div> </div>');
 
                     //                    console.log(dom_seller_top);
                     $('.category-tab #tab1').append(dom_seller_top);
